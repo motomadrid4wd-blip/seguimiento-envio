@@ -1,3 +1,16 @@
+// ---- Formatear fecha fea del backend a formato español ----
+function formatearFecha(fechaString) {
+    const fecha = new Date(fechaString.replace(" ", "T"));
+    return fecha.toLocaleString("es-ES", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+}
+
+// ---- Función principal ----
 async function consultar() {
 
     const input = document.getElementById("alb").value.trim();
@@ -27,14 +40,16 @@ async function consultar() {
         const fecha = data.fecha;
         const numero_envio = data.numero_envio;
 
+        // ---- Cabecera general ----
         let html = `
             <h3>Resumen de tu envío</h3>
             <p><strong>Transportista:</strong> ${empresa}</p>
             <p><strong>Último estado:</strong> ${estado}</p>
-            <p><strong>Fecha:</strong> ${fecha}</p>
+            <p><strong>Fecha:</strong> ${formatearFecha(fecha)}</p>
         `;
 
-        if (empresa === "CORREOS") {
+        // ---- CORREOS ----
+        if (empresa.toUpperCase().trim() === "CORREOS") {
             html += `
                 <p>Puedes consultar todos los estados del envío en:</p>
                 <a href="https://www.correos.es/es/es/particulares" target="_blank">Web de Correos</a>
@@ -42,19 +57,20 @@ async function consultar() {
             `;
         }
 
-   else if (empresa && empresa.toUpperCase().trim().startsWith("TIPSA")) {
+        // ---- TIPSA (cualquier formato: TIPSA, TIPSA 19, tipSa 07 ...) ----
+        else if (empresa && empresa.toUpperCase().trim().startsWith("TIPSA")) {
 
-    // construir el número de seguimiento real de TIPSA
-    const numero_tipsa = "028001028001" + numero_envio;
+            const numero_tipsa = "028001028001" + numero_envio;
 
-    html += `
-        <p>Puedes consultar todos los estados del envío en:</p>
-        <a href="https://www.tip-sa.com/es/localizacion-envios" target="_blank">Web de TIPSA</a>
-        <p><strong>Número de seguimiento:</strong> ${numero_tipsa}</p>
-    `;
-}
+            html += `
+                <p>Puedes consultar todos los estados del envío en:</p>
+                <a href="https://www.tip-sa.com/es/localizacion-envios" target="_blank">Web de TIPSA</a>
+                <p><strong>Número de seguimiento:</strong> ${numero_tipsa}</p>
+            `;
+        }
 
-        else if (empresa === "CBL") {
+        // ---- CBL ----
+        else if (empresa.toUpperCase().trim() === "CBL") {
             html += `
                 <p>Si tienes alguna consulta, puedes llamarnos:</p>
                 <p><strong>+34 91 524 94 20</strong></p>
@@ -72,3 +88,4 @@ async function consultar() {
         console.error(error);
     }
 }
+
