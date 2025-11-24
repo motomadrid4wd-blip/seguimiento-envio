@@ -42,11 +42,15 @@ async function consultar() {
             `;
         }
 
-       else if (empresa && empresa.toUpperCase().trim().startsWith("TIPSA")) {
+   else if (empresa && empresa.toUpperCase().trim().startsWith("TIPSA")) {
+
+    // construir el número de seguimiento real de TIPSA
+    const numero_tipsa = "028001028001" + numero_envio;
+
     html += `
         <p>Puedes consultar todos los estados del envío en:</p>
         <a href="https://www.tip-sa.com/es/localizacion-envios" target="_blank">Web de TIPSA</a>
-        <p><strong>Número de seguimiento:</strong> ${numero_envio}</p>
+        <p><strong>Número de seguimiento:</strong> ${numero_tipsa}</p>
     `;
 }
 
