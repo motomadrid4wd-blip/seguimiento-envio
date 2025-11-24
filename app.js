@@ -42,7 +42,7 @@ async function consultar() {
             `;
         }
 
-        else if (empresa === "TIPSA") {
+        else if (empresa.toUpperCase().includes("TIPSA")) {
             html += `
                 <p>Puedes consultar todos los estados del envío en:</p>
                 <a href="https://www.tip-sa.com/es/localizacion-envios" target="_blank">Web de TIPSA</a>
