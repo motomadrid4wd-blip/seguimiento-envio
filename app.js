@@ -72,6 +72,7 @@ async function consultar() {
         // ---- CBL ----
         else if (empresa.toUpperCase().trim() === "CBL") {
             html += `
+                <p><strong>Numero de envío:</strong> ${numero_envio}</p>
                 <p>Si tienes alguna consulta, puedes llamarnos:</p>
                 <p><strong>+34 91 524 94 20</strong></p>
                 <p>Horario:<br>
